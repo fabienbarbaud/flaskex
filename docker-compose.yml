@@ -21,6 +21,8 @@ services:
     volumes:
       - .:/usr/workspace
     working_dir: /usr/workspace
+    environment:
+      - HOST_APP=app
     command: "bash docker/start_test.sh app"
     depends_on:
       - app
