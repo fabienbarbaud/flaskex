@@ -12,5 +12,5 @@ wait-for-url() {
 
 pip install -e .[test]
 
-wait-for-url http://app:5000
+wait-for-url http://$1:5000
 pytest
