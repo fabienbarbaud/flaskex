@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 fake = Faker(["fr_FR"])
 
 class TestTest(unittest.TestCase):
-  def setUp(self):
+    def setUp(self):
         """Start web driver"""
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--no-sandbox')
@@ -18,20 +18,19 @@ class TestTest(unittest.TestCase):
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.implicitly_wait(10)
 
-  def tearDown(self):
-      """Stop web driver"""
-      self.driver.quit()
-  
-  def test_test(self):
-    try:
-      self.driver.delete_all_cookies()
-      self.driver.get("http://app:5000/")
-      self.driver.find_element(By.ID, "signup-user").click()
-      self.driver.find_element(By.ID, "signup-user").send_keys(fake.user_name())
-      self.driver.find_element(By.ID, "signup-mail").send_keys(fake.ascii_email())
-      self.driver.find_element(By.ID, "signup-pass").send_keys("123456")
-      self.driver.find_element(By.ID, "signup-button").click()
-      assert self.driver.find_element(By.CSS_SELECTOR, "body > section.hero.is-primary.is-bold.is-large > div").text == "Logué"
-    except NoSuchElementException as ex:
-      self.fail(ex.msg)
-  
+    def tearDown(self):
+        """Stop web driver"""
+        self.driver.quit()
+
+    def test_test(self):
+        try:
+            self.driver.delete_all_cookies()
+            self.driver.get("http://app:5000/")
+            self.driver.find_element(By.ID, "signup-user").click()
+            self.driver.find_element(By.ID, "signup-user").send_keys(fake.user_name())
+            self.driver.find_element(By.ID, "signup-mail").send_keys(fake.ascii_email())
+            self.driver.find_element(By.ID, "signup-pass").send_keys("123456")
+            self.driver.find_element(By.ID, "signup-button").click()
+            assert self.driver.find_element(By.CSS_SELECTOR, "body > section.hero.is-primary.is-bold.is-large > div").text == "Logué"
+        except NoSuchElementException as ex:
+            self.fail(ex.msg)

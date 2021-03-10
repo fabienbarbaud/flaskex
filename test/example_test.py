@@ -1,4 +1,5 @@
 from unittest import TestCase
+from scripts.helpers import hash_password
 
 
 class TestExample(TestCase):

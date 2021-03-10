@@ -6,6 +6,6 @@ setup(
     extras_require={
         "app": ["Flask", "WTForms", "SQLAlchemy", "bcrypt", "requests", "flask-heroku", "gunicorn"],
         "linter": ["flake8"],
-        "test": ["pytest", "Faker"],
+        "test": ["pytest", "Faker", "Flask", "SQLAlchemy", "bcrypt"],
     },
 )
