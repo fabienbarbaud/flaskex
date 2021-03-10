@@ -1,0 +1,21 @@
+image: docker:latest
+
+stages:
+  - build
+  - linter
+  - test
+
+build:
+  stage: build
+  script: 
+    - docker build -t image .
+
+linter:
+  stage: linter
+  script:
+    - docker run image bash docker/start_linter.sh
+
+test:
+  stage: test
+  script:
+    - docker run --env HOST_APP=localhost image bash docker/start_app_test.sh
