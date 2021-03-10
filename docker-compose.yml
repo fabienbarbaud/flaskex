@@ -17,8 +17,10 @@ services:
     command: "bash docker/start_linter.sh"
 
   test:
-    image: python:3
+    image: joyzoursky/python-chromedriver:3.8-selenium
     volumes:
-      - .:/app
-    working_dir: /app
+      - .:/usr/workspace
+    working_dir: /usr/workspace
     command: "bash docker/start_test.sh"
+    depends_on:
+      - app
