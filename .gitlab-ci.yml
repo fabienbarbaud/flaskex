@@ -4,18 +4,29 @@ stages:
   - build
   - linter
   - test
+  - deploy
 
 build:
   stage: build
-  script: 
-    - docker build -t image .
+  script:
+    - docker build -t $CI_PROJECT_PATH:test .
 
 linter:
   stage: linter
   script:
-    - docker run image bash docker/start_linter.sh
+    - docker run $CI_PROJECT_PATH:test bash docker/start_linter.sh
 
 test:
   stage: test
   script:
-    - docker run --env HOST_APP=localhost image bash docker/start_app_test.sh
+    - docker run --env HOST_APP=localhost --name test $CI_PROJECT_PATH:test bash docker/start_app_test.sh
+    - docker stop test
+    - docker rm test
+
+deploy:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - docker build -f Dockerfile_prod -t $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME .
+    - docker service update --image $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME flaskex
